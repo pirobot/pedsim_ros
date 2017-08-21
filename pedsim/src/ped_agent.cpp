@@ -32,7 +32,8 @@ Ped::Tagent::Tagent()
     teleop = false;
 
     // assign random maximal speed in m/s
-    normal_distribution<double> distribution(1.34, 0.26);
+    //normal_distribution<double> distribution(1.34, 0.26);
+    normal_distribution<double> distribution(0.5, 0.1);
     vmax = distribution(generator);
 
     forceFactorDesired = 1.0;
@@ -41,6 +42,7 @@ Ped::Tagent::Tagent()
     forceSigmaObstacle = 0.8;
 
     agentRadius = 0.35;
+    robotRadius = 0.5;
     relaxationTime = 0.5;
 }
 
@@ -208,7 +210,13 @@ Ped::Tvector Ped::Tagent::obstacleForce() const
         }
     }
 
-    double distance = sqrt(minDistanceSquared) - agentRadius;
+    double distance;
+
+    if(this->getType() == ROBOT)
+      distance = sqrt(minDistanceSquared) - robotRadius;
+    else
+      distance = sqrt(minDistanceSquared) - agentRadius;
+
     double forceAmount = exp(-distance / forceSigmaObstacle);
     return forceAmount * minDiff.normalized();
 }

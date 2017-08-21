@@ -101,6 +101,7 @@ protected:
     AgentType type;
     double vmax;
     double agentRadius;
+    double robotRadius;
     double relaxationTime;
     bool teleop;
 
