@@ -120,6 +120,10 @@ public:
 
     // simulation visualization mode
     VisualMode visual_mode;
+
+    // tf parameters
+    std::string global_frame;
+    std::string robot_base_link;
 };
 
 #endif

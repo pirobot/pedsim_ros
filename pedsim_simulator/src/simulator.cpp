@@ -125,6 +125,14 @@ bool Simulator::initializeSimulation()
     orientation_handler_.reset(new OrientationHandler());
     robot_ = nullptr;
 
+    /// Frame parameters
+    std::string global_frame;
+    std::string robot_base_link;
+    private_nh.param<std::string>("global_frame", global_frame, "odom");
+    private_nh.param<std::string>("robot_base_link", robot_base_link, "base_link");
+    CONFIG.global_frame = global_frame;
+    CONFIG.robot_base_link = robot_base_link;
+    
     /// load additional parameters
     std::string scene_file_param;
     private_nh.param<std::string>("scene_file", scene_file_param,
@@ -139,7 +147,7 @@ bool Simulator::initializeSimulation()
     }
 
     private_nh.param<bool>("enable_groups", CONFIG.groups_enabled, true);
-    private_nh.param<double>("max_robot_speed", CONFIG.max_robot_speed, 1.5);
+    private_nh.param<double>("max_robot_speed", CONFIG.max_robot_speed, 2.5);
 
     int op_mode = 1;
     private_nh.param<int>("robot_mode", op_mode, 1); // teleop
@@ -325,7 +333,7 @@ void Simulator::updateRobotPositionFromTF()
         // Get robot position via TF
         tf::StampedTransform tfTransform;
         try {
-            transform_listener_->lookupTransform("odom", "base_footprint",
+            transform_listener_->lookupTransform(CONFIG.global_frame, CONFIG.robot_base_link,
                 ros::Time(0), tfTransform);
         }
         catch (tf::TransformException& e) {
@@ -366,7 +374,7 @@ void Simulator::publishSocialActivities()
     std_msgs::Header social_activities_header;
     social_activities_header.stamp = ros::Time::now();
     social_activities.header = social_activities_header;
-    social_activities.header.frame_id = "odom";
+    social_activities.header.frame_id = CONFIG.global_frame;
 
     pedsim_msgs::SocialActivity queueing_activity;
     pedsim_msgs::SocialActivity shopping_activity;
@@ -430,7 +438,7 @@ void Simulator::publishData()
     std_msgs::Header tracked_people_header;
     tracked_people_header.stamp = ros::Time::now();
     tracked_people.header = tracked_people_header;
-    tracked_people.header.frame_id = "odom";
+    tracked_people.header.frame_id = CONFIG.global_frame;
 
     for (Agent* a : SCENE.getAgents()) {
         if (a->getType() == Ped::Tagent::ROBOT)
@@ -470,7 +478,7 @@ void Simulator::publishData()
     std_msgs::Header tracked_groups_header;
     tracked_groups_header.stamp = ros::Time::now();
     tracked_groups.header = tracked_groups_header;
-    tracked_groups.header.frame_id = "odom";
+    tracked_groups.header.frame_id = CONFIG.global_frame;
 
     QList<AgentGroup*> sim_groups = SCENE.getGroups();
     for (AgentGroup* ag : sim_groups) {
@@ -505,8 +513,8 @@ void Simulator::publishRobotPosition()
 
     nav_msgs::Odometry robot_location;
     robot_location.header.stamp = ros::Time::now();
-    robot_location.header.frame_id = "odom";
-    robot_location.child_frame_id = "odom";
+    robot_location.header.frame_id = CONFIG.global_frame;
+    robot_location.child_frame_id = "sibot/base_link";
 
     robot_location.pose.pose.position.x = robot_->getx();
     robot_location.pose.pose.position.y = robot_->gety();
@@ -549,7 +557,7 @@ void Simulator::publishAgents()
         /// walking people message
         animated_marker_msgs::AnimatedMarker marker;
         marker.mesh_use_embedded_materials = true;
-        marker.header.frame_id = "odom";
+        marker.header.frame_id = CONFIG.global_frame;
         marker.header.stamp = ros::Time();
         marker.id = a->getId();
         marker.type = animated_marker_msgs::AnimatedMarker::MESH_RESOURCE;
@@ -564,7 +572,7 @@ void Simulator::publishAgents()
 
         /// arrows
         visualization_msgs::Marker arrow;
-        arrow.header.frame_id = "odom";
+        arrow.header.frame_id = CONFIG.global_frame;
         arrow.header.stamp = ros::Time();
         arrow.id = a->getId() + 3000;
 
@@ -698,7 +706,7 @@ void Simulator::publishGroupVisuals()
 
         for (Agent* m : ag->getMembers()) {
             visualization_msgs::Marker marker;
-            marker.header.frame_id = "odom";
+            marker.header.frame_id = CONFIG.global_frame;
             marker.header.stamp = ros::Time();
             marker.id = m->getId() + 1000;
 
@@ -732,7 +740,7 @@ void Simulator::publishGroupVisuals()
 void Simulator::publishObstacles()
 {
     nav_msgs::GridCells grid_cells;
-    grid_cells.header.frame_id = "odom";
+    grid_cells.header.frame_id = CONFIG.global_frame;
     grid_cells.cell_width = CONFIG.cell_width;
     grid_cells.cell_height = CONFIG.cell_height;
 
@@ -755,7 +763,7 @@ void Simulator::publishObstacles()
 void Simulator::publishWalls()
 {
     visualization_msgs::Marker marker;
-    marker.header.frame_id = "odom";
+    marker.header.frame_id = CONFIG.global_frame;
     marker.header.stamp = ros::Time();
     marker.id = 10000;
     marker.color.a = 1.0;
@@ -790,7 +798,7 @@ void Simulator::publishAttractions()
     for (Waypoint* wp : SCENE.getWaypoints()) {
         //      wp->getType()
         visualization_msgs::Marker marker;
-        marker.header.frame_id = "odom";
+        marker.header.frame_id = CONFIG.global_frame;
         marker.header.stamp = ros::Time();
         marker.id = wp->getId();
 
@@ -816,7 +824,7 @@ void Simulator::publishAttractions()
     /// publish attractions (shopping areas etc)
     for (AttractionArea* atr : SCENE.getAttractions()) {
         visualization_msgs::Marker marker;
-        marker.header.frame_id = "odom";
+        marker.header.frame_id = CONFIG.global_frame;
         marker.header.stamp = ros::Time();
         marker.id = atr->getId();
 
