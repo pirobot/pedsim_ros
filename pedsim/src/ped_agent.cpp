@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <cmath>
 #include <random>
+#include <iostream>
 
 using namespace std;
 
@@ -33,15 +34,15 @@ Ped::Tagent::Tagent()
 
     // assign random maximal speed in m/s
     //normal_distribution<double> distribution(1.34, 0.26);
-    normal_distribution<double> distribution(0.5, 0.1);
+    normal_distribution<double> distribution(1.0, 0.2);
     vmax = distribution(generator);
 
     forceFactorDesired = 1.0;
     forceFactorSocial = 2.1;
-    forceFactorObstacle = 10.0;
+    forceFactorObstacle = 50.0;
     forceSigmaObstacle = 0.8;
 
-    agentRadius = 0.35;
+    agentRadius = 0.5;
     robotRadius = 0.5;
     relaxationTime = 0.5;
 }
@@ -215,7 +216,7 @@ Ped::Tvector Ped::Tagent::obstacleForce() const
     if(this->getType() == ROBOT)
       distance = sqrt(minDistanceSquared) - robotRadius;
     else
-      distance = sqrt(minDistanceSquared) - agentRadius;
+      distance = sqrt(minDistanceSquared) - agentRadius - 1.5;
 
     double forceAmount = exp(-distance / forceSigmaObstacle);
     return forceAmount * minDiff.normalized();

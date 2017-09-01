@@ -6,7 +6,7 @@
     <obstacle x1="-0.5" y1="14.5" x2="19.5" y2="14.5"/>
     <obstacle x1="19.5" y1="-0.5" x2="19.5" y2="14.5"/>
 
-     <obstacle x1="7.5" y1="-0.5" x2="7.5" y2="4.5"/>
+    <obstacle x1="7.5" y1="-0.5" x2="7.5" y2="4.5"/>
     <!-- <obstacle x1="19.5" y1="14.5" x2="19.5" y2="4.5"/> --> 
 
     <!--Waypoints (incl. WaitingQueues)-->
@@ -30,9 +30,9 @@
 
 
         <!--AgentClusters-->
-    <agent x="6.8" y="6.2" n="1" dx="1" dy="1" type="3">
-        <addwaypoint id="enter_bookshop"/>
+    <agent x="6.8" y="6.2" n="1" dx="1" dy="1" type="0">
         <addwaypoint id="leave_bookshop"/>
+        <addwaypoint id="robot_start"/>
     </agent>
 
     

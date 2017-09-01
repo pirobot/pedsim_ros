@@ -339,7 +339,7 @@ void Simulator::updateRobotPositionFromTF()
         catch (tf::TransformException& e) {
             ROS_WARN_STREAM_THROTTLE(
                 5.0,
-                "TF lookup from base_footprint to odom failed. Reason: " << e.what());
+                "TF lookup from robot base frame to odom failed. Reason: " << e.what());
             return;
         }
 
@@ -514,7 +514,7 @@ void Simulator::publishRobotPosition()
     nav_msgs::Odometry robot_location;
     robot_location.header.stamp = ros::Time::now();
     robot_location.header.frame_id = CONFIG.global_frame;
-    robot_location.child_frame_id = "sibot/base_link";
+    robot_location.child_frame_id = CONFIG.robot_base_link;
 
     robot_location.pose.pose.position.x = robot_->getx();
     robot_location.pose.pose.position.y = robot_->gety();
@@ -853,8 +853,12 @@ void Simulator::publishAttractions()
 Eigen::Quaternionf Simulator::computePose(Agent* a)
 {
     double theta = atan2(a->getvy(), a->getvx());
+    /*
     Eigen::Quaternionf q = orientation_handler_->rpy2Quaternion(
         M_PI / 2.0, theta + (M_PI / 2.0), 0.0);
+    */
+    Eigen::Quaternionf q = orientation_handler_->rpy2Quaternion(
+       M_PI / 2.0, theta, 0.0);
     return q;
 }
 
