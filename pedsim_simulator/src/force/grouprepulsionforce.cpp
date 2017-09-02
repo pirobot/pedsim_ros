@@ -41,7 +41,7 @@ GroupRepulsionForce::GroupRepulsionForce ( Agent* agentIn )
 {
     // initialize values
     setFactor ( CONFIG.forceGroupRepulsion );
-    overlapDistance = 0.5;
+    overlapDistance = 2.0;
 
     // connect signals
     connect ( &CONFIG, SIGNAL ( forceFactorGroupRepulsionChanged ( double ) ),
@@ -68,7 +68,7 @@ Ped::Tvector GroupRepulsionForce::getForce ( Ped::Tvector walkingDirection )
     // sanity checks
     if ( group->isEmpty() )
     {
-		ROS_DEBUG("Computing GroupRepulsionForce for empty group!");
+	ROS_DEBUG("Computing GroupRepulsionForce for empty group!");
         return Ped::Tvector();
     }
 

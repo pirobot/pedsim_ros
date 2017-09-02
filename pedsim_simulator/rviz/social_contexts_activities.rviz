@@ -10,6 +10,7 @@ Panels:
         - /Pedsim-Visuals1/Headings1
         - /Pedsim-Visuals1/Walls1
         - /Tracking-Visuals1
+        - /Tracking-Visuals1/TrackedPersons1
         - /Tracking-Visuals1/TrackedGroups1
         - /Waypoints1
       Splitter Ratio: 0.472663
@@ -134,7 +135,7 @@ Visualization Manager:
           Style:
             Line width: 0.05
             Scaling factor: 1
-            Value: Person meshes
+            Value: Cylinders
           Topic: /pedsim/tracked_persons
           Unreliable: false
           Value: true
@@ -182,7 +183,7 @@ Visualization Manager:
       Marker Topic: /pedsim/waypoints
       Name: Waypoints
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -221,10 +222,10 @@ Visualization Manager:
         Z: -8.21775e-06
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 1.5698
+      Pitch: 0.899797
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 3.56857
+      Yaw: 3.25357
     Saved: ~
 Window Geometry:
   Displays:

@@ -157,7 +157,7 @@ Ped::Tvector Ped::Tagent::socialForce() const
         // compute difference between both agents' positions
         Tvector diff = other->p - p;
         // NOTE - disabled robot check!
-        // if(other->getType() == ROBOT) diff /= 5;
+        if(other->getType() == ROBOT) diff /= 5;
 
         Tvector diffDirection = diff.normalized();
 
