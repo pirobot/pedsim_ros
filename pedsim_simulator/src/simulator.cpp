@@ -746,8 +746,8 @@ void Simulator::publishObstacles()
 
     for (const auto& obstacle : SCENE.obstacle_cells_) {
         geometry_msgs::Point p;
-        p.x = obstacle.x;
-        p.y = obstacle.y;
+        p.x = obstacle.x + 1.0;
+        p.y = obstacle.y + 1.0;
         p.z = 0.0;
         grid_cells.cells.push_back(p);
     }
@@ -778,8 +778,8 @@ void Simulator::publishWalls()
 
     for (const auto& obstacle : SCENE.obstacle_cells_) {
         geometry_msgs::Point p;
-        p.x = obstacle.x + 0.5;
-        p.y = obstacle.y + 0.5;
+        p.x = obstacle.x + 1.0;
+        p.y = obstacle.y + 1.0;
         p.z = 0.0;
         marker.points.push_back(p);
     }
