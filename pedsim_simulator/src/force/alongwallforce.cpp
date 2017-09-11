@@ -44,7 +44,7 @@ AlongWallForce::AlongWallForce ( Agent* agentIn )
     // initialize values
     // TODO - put these magic values into a yaml parameter file
     speedThreshold = 0.2;
-    distanceThreshold = 0.6;
+    distanceThreshold = 1.5;
     angleThresholdDegree = 20;
     setFactor ( CONFIG.forceAlongWall );
 
