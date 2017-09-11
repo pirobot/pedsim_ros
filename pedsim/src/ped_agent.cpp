@@ -158,6 +158,7 @@ Ped::Tvector Ped::Tagent::socialForce() const
         Tvector diff = other->p - p;
         // NOTE - disabled robot check!
         if(other->getType() == ROBOT) diff /= 5;
+	else diff /= 5;
 
         Tvector diffDirection = diff.normalized();
 
