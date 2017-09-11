@@ -128,10 +128,12 @@ bool Simulator::initializeSimulation()
     /// Frame parameters
     std::string global_frame;
     std::string robot_base_link;
-    private_nh.param<std::string>("global_frame", global_frame, "odom");
-    private_nh.param<std::string>("robot_base_link", robot_base_link, "base_link");
-    CONFIG.global_frame = global_frame;
-    CONFIG.robot_base_link = robot_base_link;
+    private_nh.param<std::string>("global_frame", global_frame, "map");
+    private_nh.param<std::string>("robot_base_link", robot_base_link, "sibot/base_link");
+    //    CONFIG.global_frame = global_frame;
+    //    CONFIG.robot_base_link = robot_base_link;
+    CONFIG.global_frame = "map";
+    CONFIG.robot_base_link = "sibot/base_link";
     
     /// load additional parameters
     std::string scene_file_param;
@@ -196,13 +198,17 @@ void Simulator::runSimulation()
         publishData();
         publishRobotPosition();
         publishObstacles();
+	publishWalls();
+	//	publishAttractions();
 
         if (CONFIG.visual_mode == VisualMode::MINIMAL) {
             publishAgents(); // animated markers
 
+	    /*
             if (SCENE.getTime() < 20) {
                 publishWalls();
             }
+	    */
         }
 
         if (CONFIG.visual_mode == VisualMode::FULL) {
@@ -210,10 +216,12 @@ void Simulator::runSimulation()
             publishGroupVisuals();
             updateAgentActivities();
 
+
             if (SCENE.getTime() < 20) {
                 publishAttractions();
-                publishWalls();
+		//                publishWalls();
             }
+
         }
 
         ros::spinOnce();
