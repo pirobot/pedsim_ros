@@ -772,7 +772,7 @@ void Simulator::publishWalls()
     marker.color.b = 0.0;
     marker.scale.x = 1.0;
     marker.scale.y = 1.0;
-    marker.scale.z = 2.0;
+    marker.scale.z = 1.0;
     marker.pose.position.z = marker.scale.z / 2.0;
     marker.type = visualization_msgs::Marker::CUBE_LIST;
 
