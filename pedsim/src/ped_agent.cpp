@@ -42,8 +42,8 @@ Ped::Tagent::Tagent()
     forceFactorObstacle = 50.0;
     forceSigmaObstacle = 0.8;
 
-    agentRadius = 0.5;
-    robotRadius = 0.5;
+    agentRadius = 1.5;
+    robotRadius = 1.5;
     relaxationTime = 0.5;
 }
 
