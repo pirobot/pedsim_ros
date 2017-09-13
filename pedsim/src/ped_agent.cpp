@@ -34,13 +34,13 @@ Ped::Tagent::Tagent()
 
     // assign random maximal speed in m/s
     //normal_distribution<double> distribution(1.34, 0.26);
-    normal_distribution<double> distribution(1.0, 0.2);
+    normal_distribution<double> distribution(1.2, 0.2);
     vmax = distribution(generator);
 
     forceFactorDesired = 1.0;
     forceFactorSocial = 2.1;
     forceFactorObstacle = 50.0;
-    forceSigmaObstacle = 0.8;
+    forceSigmaObstacle = 0.2;
 
     agentRadius = 1.5;
     robotRadius = 1.5;
@@ -158,7 +158,7 @@ Ped::Tvector Ped::Tagent::socialForce() const
         Tvector diff = other->p - p;
         // NOTE - disabled robot check!
         if(other->getType() == ROBOT) diff /= 5;
-	else diff /= 5;
+	else diff /= 3;
 
         Tvector diffDirection = diff.normalized();
 
@@ -185,6 +185,9 @@ Ped::Tvector Ped::Tagent::socialForce() const
         Tvector forceAngle = forceAngleAmount * interactionDirection.leftNormalVector();
 
         force += forceVelocity + forceAngle;
+
+	if(other->getType() == ROBOT) force *= 2.0;
+	
     }
 
     return force;
@@ -215,7 +218,7 @@ Ped::Tvector Ped::Tagent::obstacleForce() const
     double distance;
 
     if(this->getType() == ROBOT)
-      distance = sqrt(minDistanceSquared) - robotRadius;
+      distance = sqrt(minDistanceSquared) - robotRadius - 1.5;
     else
       distance = sqrt(minDistanceSquared) - agentRadius - 1.5;
 
