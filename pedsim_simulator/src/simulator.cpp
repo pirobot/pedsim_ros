@@ -71,6 +71,10 @@ Simulator::~Simulator()
     QCoreApplication::exit(returnValue);
 }
 
+void Simulator::robotPositionCallback(const nav_msgs::Odometry& odom) {
+  gazebo_robot_odom_ = odom;
+}
+
 bool Simulator::initializeSimulation()
 {
     ros::NodeHandle private_nh("~");
@@ -125,15 +129,18 @@ bool Simulator::initializeSimulation()
     orientation_handler_.reset(new OrientationHandler());
     robot_ = nullptr;
 
+    /// Subscribers
+    sub_robot_position_ = nh_.subscribe("odom", 1, &Simulator::robotPositionCallback, this);
+
     /// Frame parameters
     std::string global_frame;
     std::string robot_base_link;
     private_nh.param<std::string>("global_frame", global_frame, "map");
     private_nh.param<std::string>("robot_base_link", robot_base_link, "sibot/base_link");
-    //    CONFIG.global_frame = global_frame;
-    //    CONFIG.robot_base_link = robot_base_link;
-    CONFIG.global_frame = "map";
-    CONFIG.robot_base_link = "sibot/base_link";
+    CONFIG.global_frame = global_frame;
+    CONFIG.robot_base_link = robot_base_link;
+    //CONFIG.global_frame = "map";
+    //CONFIG.robot_base_link = "sibot/base_link";
     
     /// load additional parameters
     std::string scene_file_param;

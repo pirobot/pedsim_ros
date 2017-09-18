@@ -116,6 +116,7 @@ public:
 
 protected:
     void reconfigureCB(SimConfig& config, uint32_t level);
+    void robotPositionCallback(const nav_msgs::Odometry& odom);
     dynamic_reconfigure::Server<SimConfig> server_;
 
 private:
@@ -138,6 +139,10 @@ private:
     ros::Publisher pub_waypoints_;
     ros::Publisher pub_agent_arrows_;
     ros::Publisher pub_robot_position_;
+
+    // Subscribers
+    ros::Subscriber sub_robot_position_;
+    nav_msgs::Odometry gazebo_robot_odom_;
 
     // provided services
     ros::ServiceServer srv_pause_simulation_;

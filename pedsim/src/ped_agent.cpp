@@ -34,7 +34,7 @@ Ped::Tagent::Tagent()
 
     // assign random maximal speed in m/s
     //normal_distribution<double> distribution(1.34, 0.26);
-    normal_distribution<double> distribution(1.2, 0.2);
+    normal_distribution<double> distribution(1.3, 0.1);
     vmax = distribution(generator);
 
     forceFactorDesired = 1.0;
