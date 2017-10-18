@@ -39,7 +39,7 @@ Config::Config(QObject* parent)
     updateRate = 25.0;
     simulationFactor = 1.0;
 
-    forceObstacle = 10.0;
+    forceObstacle = 30.0;
     sigmaObstacle = 0.2;
     forceSocial = 5.1;
 
@@ -47,7 +47,7 @@ Config::Config(QObject* parent)
     forceGroupCoherence = 2.0;
     forceGroupRepulsion = 1.0;
     forceRandom = 0.1;
-    forceAlongWall = 2.0;
+    forceAlongWall = 10.0;
 
     cell_width = 1.0;
     cell_height = 1.0;

@@ -205,8 +205,8 @@ void Simulator::runSimulation()
         publishData();
         publishRobotPosition();
         publishObstacles();
-	publishWalls();
-	//	publishAttractions();
+        publishWalls();
+		publishAttractions();
 
         if (CONFIG.visual_mode == VisualMode::MINIMAL) {
             publishAgents(); // animated markers
@@ -223,11 +223,12 @@ void Simulator::runSimulation()
             publishGroupVisuals();
             updateAgentActivities();
 
-
+            /*
             if (SCENE.getTime() < 20) {
                 publishAttractions();
-		//                publishWalls();
+                publishWalls();
             }
+            */
 
         }
 
@@ -817,10 +818,10 @@ void Simulator::publishAttractions()
         marker.header.stamp = ros::Time();
         marker.id = wp->getId();
 
-        marker.color.a = 0.15;
-        marker.color.r = 1.0;
-        marker.color.g = 0.0;
-        marker.color.b = 1.0;
+        marker.color.a = 0.4;
+        marker.color.r = 0.1;
+        marker.color.g = 1.0;
+        marker.color.b = 0.1;
 
         // TODO - get radius information from waypoints
         marker.scale.x = 3.0;
