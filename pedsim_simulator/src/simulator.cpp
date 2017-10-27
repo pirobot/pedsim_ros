@@ -166,6 +166,13 @@ bool Simulator::initializeSimulation()
     private_nh.param<int>("visual_mode", vis_mode, 1);
     CONFIG.visual_mode = static_cast<VisualMode>(vis_mode);
 
+    bool show_robot = false;
+    bool show_robot_direction = false;
+    private_nh.param<bool>("show_robot", show_robot, false);
+    private_nh.param<bool>("show_robot_direction", show_robot_direction, false);
+    CONFIG.show_robot = show_robot;
+    CONFIG.show_robot_direction = show_robot_direction;
+
     agent_activities_.clear();
     paused_ = false;
 
@@ -634,7 +641,7 @@ void Simulator::publishAgents()
             marker.animation_speed = 0.0;
         }
 
-        bool publishMarker = false, publishArrow = false;
+        //bool publishMarker = true, publishArrow = true;
         if (robot_ != nullptr && a->getType() == robot_->getType()) {
             marker.type = visualization_msgs::Marker::MESH_RESOURCE;
             // TODO - this should be a configurable parameter via launch file
@@ -656,14 +663,27 @@ void Simulator::publishAgents()
             marker.pose.position.z = 0.7;
             arrow.pose.position.z = 1.0;
 
-            nh_.getParamCached("/pedsim_simulator/show_robot", publishMarker);
-            nh_.getParamCached("/pedsim_simulator/show_robot_direction",
-                publishArrow);
+	    if (CONFIG.show_robot)
+	      marker_array.markers.push_back(marker);
+	    if (CONFIG.show_robot_direction)
+	      arrow_array.markers.push_back(arrow);
+
+            //nh_.getParamCached("/pedsim_simulator/show_robot", publishMarker);
+            //nh_.getParamCached("/pedsim_simulator/show_robot_direction", publishArrow);
         }
 
+	/*
         if (publishMarker)
             marker_array.markers.push_back(marker);
         if (publishArrow)
+            arrow_array.markers.push_back(arrow);
+	*/
+
+	bool show_animated_agents = true;
+	bool show_animated_agents_direction = true;
+        if (show_animated_agents)
+            marker_array.markers.push_back(marker);
+        if (show_animated_agents_direction)
             arrow_array.markers.push_back(arrow);
 
         /// status message

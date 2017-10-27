@@ -61,6 +61,9 @@ Config::Config(QObject* parent)
     wait_time_beta = 0.2;
 
     visual_mode = VisualMode::MINIMAL;
+
+    show_robot = false;
+    show_robot_direction = false;
 }
 
 Config& Config::getInstance()

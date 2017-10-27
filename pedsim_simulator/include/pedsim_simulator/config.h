@@ -121,6 +121,10 @@ public:
     // simulation visualization mode
     VisualMode visual_mode;
 
+    // To show or not to show the robot and direction of motion
+    bool show_robot;
+    bool show_robot_direction;
+
     // tf parameters
     std::string global_frame;
     std::string robot_base_link;
