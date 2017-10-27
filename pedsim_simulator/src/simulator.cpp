@@ -109,7 +109,7 @@ bool Simulator::initializeSimulation()
         "/pedsim/static_obstacles", queue_size);
     pub_all_agents_ = nh_.advertise<pedsim_msgs::AllAgentsState>(
         "/pedsim/dynamic_obstacles", queue_size);
-    pub_tracked_persons_ = nh_.advertise<pedsim_msgs::TrackedPersons>(
+    pub_tracked_persons_ = nh_.advertise<spencer_tracking_msgs::TrackedPersons>(
         "/pedsim/tracked_persons", queue_size);
     pub_tracked_groups_ = nh_.advertise<pedsim_msgs::TrackedGroups>(
         "/pedsim/tracked_groups", queue_size);
@@ -450,7 +450,7 @@ void Simulator::publishSocialActivities()
 void Simulator::publishData()
 {
     /// Tracked people
-    pedsim_msgs::TrackedPersons tracked_people;
+    spencer_tracking_msgs::TrackedPersons tracked_people;
     std_msgs::Header tracked_people_header;
     tracked_people_header.stamp = ros::Time::now();
     tracked_people.header = tracked_people_header;
@@ -460,7 +460,7 @@ void Simulator::publishData()
         if (a->getType() == Ped::Tagent::ROBOT)
             continue;
 
-        pedsim_msgs::TrackedPerson person;
+        spencer_tracking_msgs::TrackedPerson person;
         person.track_id = a->getId();
         person.is_occluded = false;
         person.detection_id = a->getId();

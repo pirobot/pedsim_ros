@@ -45,8 +45,8 @@
 #include <pedsim_msgs/SocialActivity.h>
 #include <pedsim_msgs/TrackedGroup.h>
 #include <pedsim_msgs/TrackedGroups.h>
-#include <pedsim_msgs/TrackedPerson.h>
-#include <pedsim_msgs/TrackedPersons.h>
+#include <spencer_tracking_msgs/TrackedPerson.h>
+#include <spencer_tracking_msgs/TrackedPersons.h>
 
 // other ROS-sy messages
 #include <animated_marker_msgs/AnimatedMarker.h>
