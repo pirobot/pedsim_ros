@@ -179,12 +179,15 @@ void Agent::move(double h)
             }
         }
         else if (CONFIG.robot_mode == RobotMode::SOCIAL_DRIVE) {
-            Ped::Tagent::setForceFactorSocial(CONFIG.forceSocial * 0.7);
-            Ped::Tagent::setForceFactorObstacle(35);
-            Ped::Tagent::setForceFactorDesired(4.2);
+	    //Ped::Tagent::setForceFactorSocial(CONFIG.forceSocial * 0.7);
+   	    Ped::Tagent::setForceFactorSocial(CONFIG.forceSocial);
+            //Ped::Tagent::setForceFactorObstacle(35);
+	    Ped::Tagent::setForceFactorObstacle(100);
+            //Ped::Tagent::setForceFactorDesired(4.2);
+            Ped::Tagent::setForceFactorDesired(1.0);
 
-            Ped::Tagent::setVmax(1.6);
-            Ped::Tagent::SetRadius(0.4);
+            Ped::Tagent::setVmax(0.5);
+            Ped::Tagent::SetRadius(1.0);
             Ped::Tagent::move(h);
         }
     }

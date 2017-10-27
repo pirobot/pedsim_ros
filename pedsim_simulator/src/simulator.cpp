@@ -181,8 +181,8 @@ void Simulator::runSimulation()
     ros::Rate r(CONFIG.updateRate); // Hz
 
     while (ros::ok()) {
-        if (SCENE.getTime() < 0.1) {
-            // setup the robot
+         if (SCENE.getTime() < 0.1) {
+   	    // setup the robot
             for (Agent* a : SCENE.getAgents()) {
                 if (a->getType() == Ped::Tagent::ROBOT) {
                     robot_ = a;
@@ -206,7 +206,7 @@ void Simulator::runSimulation()
         publishRobotPosition();
         publishObstacles();
         publishWalls();
-		publishAttractions();
+	publishAttractions();
 
         if (CONFIG.visual_mode == VisualMode::MINIMAL) {
             publishAgents(); // animated markers
@@ -219,6 +219,7 @@ void Simulator::runSimulation()
         }
 
         if (CONFIG.visual_mode == VisualMode::FULL) {
+            publishAgents(); // animated markers
             publishSocialActivities();
             publishGroupVisuals();
             updateAgentActivities();
@@ -869,12 +870,14 @@ void Simulator::publishAttractions()
 Eigen::Quaternionf Simulator::computePose(Agent* a)
 {
     double theta = atan2(a->getvy(), a->getvx());
-    /*
+
     Eigen::Quaternionf q = orientation_handler_->rpy2Quaternion(
         M_PI / 2.0, theta + (M_PI / 2.0), 0.0);
-    */
+
+    /*
     Eigen::Quaternionf q = orientation_handler_->rpy2Quaternion(
        M_PI / 2.0, theta, 0.0);
+    */
     return q;
 }
 
