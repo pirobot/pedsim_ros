@@ -634,7 +634,7 @@ void Simulator::publishAgents()
             marker.animation_speed = 0.0;
         }
 
-        bool publishMarker = true, publishArrow = true;
+        bool publishMarker = false, publishArrow = false;
         if (robot_ != nullptr && a->getType() == robot_->getType()) {
             marker.type = visualization_msgs::Marker::MESH_RESOURCE;
             // TODO - this should be a configurable parameter via launch file
